@@ -17,11 +17,11 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -39,21 +39,21 @@ public:
     QGroupBox *groupBox;
     QWidget *widget;
     QVBoxLayout *verticalLayout;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
-    QRadioButton *radioButton_3;
-    QRadioButton *radioButton_4;
+    QRadioButton *radioFIFO;
+    QRadioButton *radioLFU;
+    QRadioButton *radioLRU;
+    QRadioButton *radioRANDOM;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QGroupBox *groupBox_2;
     QWidget *widget1;
     QVBoxLayout *verticalLayout_3;
-    QRadioButton *radioButton_9;
-    QRadioButton *radioButton_10;
-    QRadioButton *radioButton_11;
+    QRadioButton *radioDireto;
+    QRadioButton *radioAssociativo;
+    QRadioButton *radioAssociativoConjunto;
     QLabel *label_4;
-    QTextEdit *textEdit;
     QLabel *label_5;
+    QPlainTextEdit *plainTextEdit;
     QWidget *widget2;
     QVBoxLayout *verticalLayout_4;
     QLineEdit *lineEdit;
@@ -121,25 +121,26 @@ public:
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        radioButton = new QRadioButton(widget);
-        radioButton->setObjectName(QString::fromUtf8("radioButton"));
+        radioFIFO = new QRadioButton(widget);
+        radioFIFO->setObjectName(QString::fromUtf8("radioFIFO"));
+        radioFIFO->setChecked(false);
 
-        verticalLayout->addWidget(radioButton);
+        verticalLayout->addWidget(radioFIFO);
 
-        radioButton_2 = new QRadioButton(widget);
-        radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
+        radioLFU = new QRadioButton(widget);
+        radioLFU->setObjectName(QString::fromUtf8("radioLFU"));
 
-        verticalLayout->addWidget(radioButton_2);
+        verticalLayout->addWidget(radioLFU);
 
-        radioButton_3 = new QRadioButton(widget);
-        radioButton_3->setObjectName(QString::fromUtf8("radioButton_3"));
+        radioLRU = new QRadioButton(widget);
+        radioLRU->setObjectName(QString::fromUtf8("radioLRU"));
 
-        verticalLayout->addWidget(radioButton_3);
+        verticalLayout->addWidget(radioLRU);
 
-        radioButton_4 = new QRadioButton(widget);
-        radioButton_4->setObjectName(QString::fromUtf8("radioButton_4"));
+        radioRANDOM = new QRadioButton(widget);
+        radioRANDOM->setObjectName(QString::fromUtf8("radioRANDOM"));
 
-        verticalLayout->addWidget(radioButton_4);
+        verticalLayout->addWidget(radioRANDOM);
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
@@ -158,30 +159,30 @@ public:
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        radioButton_9 = new QRadioButton(widget1);
-        radioButton_9->setObjectName(QString::fromUtf8("radioButton_9"));
+        radioDireto = new QRadioButton(widget1);
+        radioDireto->setObjectName(QString::fromUtf8("radioDireto"));
 
-        verticalLayout_3->addWidget(radioButton_9);
+        verticalLayout_3->addWidget(radioDireto);
 
-        radioButton_10 = new QRadioButton(widget1);
-        radioButton_10->setObjectName(QString::fromUtf8("radioButton_10"));
+        radioAssociativo = new QRadioButton(widget1);
+        radioAssociativo->setObjectName(QString::fromUtf8("radioAssociativo"));
 
-        verticalLayout_3->addWidget(radioButton_10);
+        verticalLayout_3->addWidget(radioAssociativo);
 
-        radioButton_11 = new QRadioButton(widget1);
-        radioButton_11->setObjectName(QString::fromUtf8("radioButton_11"));
+        radioAssociativoConjunto = new QRadioButton(widget1);
+        radioAssociativoConjunto->setObjectName(QString::fromUtf8("radioAssociativoConjunto"));
 
-        verticalLayout_3->addWidget(radioButton_11);
+        verticalLayout_3->addWidget(radioAssociativoConjunto);
 
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(230, 70, 151, 21));
-        textEdit = new QTextEdit(centralWidget);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(10, 80, 211, 341));
+        label_4->setGeometry(QRect(230, 80, 151, 21));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(440, 470, 91, 20));
+        plainTextEdit = new QPlainTextEdit(centralWidget);
+        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
+        plainTextEdit->setGeometry(QRect(10, 90, 211, 331));
         widget2 = new QWidget(centralWidget);
         widget2->setObjectName(QString::fromUtf8("widget2"));
         widget2->setGeometry(QRect(230, 110, 186, 60));
@@ -235,16 +236,16 @@ public:
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Dado", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Mem\303\263ria Cache", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "Algoritmo", nullptr));
-        radioButton->setText(QCoreApplication::translate("MainWindow", "FIFO", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("MainWindow", "LFU", nullptr));
-        radioButton_3->setText(QCoreApplication::translate("MainWindow", "LRU", nullptr));
-        radioButton_4->setText(QCoreApplication::translate("MainWindow", "RANDOM", nullptr));
+        radioFIFO->setText(QCoreApplication::translate("MainWindow", "FIFO", nullptr));
+        radioLFU->setText(QCoreApplication::translate("MainWindow", "LFU", nullptr));
+        radioLRU->setText(QCoreApplication::translate("MainWindow", "LRU", nullptr));
+        radioRANDOM->setText(QCoreApplication::translate("MainWindow", "RANDOM", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Carregar Instru\303\247\303\265es", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Rodar", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Mapeamento", nullptr));
-        radioButton_9->setText(QCoreApplication::translate("MainWindow", "Direto", nullptr));
-        radioButton_10->setText(QCoreApplication::translate("MainWindow", "Associativo", nullptr));
-        radioButton_11->setText(QCoreApplication::translate("MainWindow", "Associativo por conjunto", nullptr));
+        radioDireto->setText(QCoreApplication::translate("MainWindow", "Direto", nullptr));
+        radioAssociativo->setText(QCoreApplication::translate("MainWindow", "Associativo", nullptr));
+        radioAssociativoConjunto->setText(QCoreApplication::translate("MainWindow", "Associativo por conjunto", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Capacidade total da  cache ", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Fra\303\247\303\243o de acertos", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "Inserir", nullptr));

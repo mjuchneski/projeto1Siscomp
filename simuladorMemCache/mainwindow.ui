@@ -146,28 +146,31 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radioFIFO">
         <property name="text">
          <string>FIFO</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="radioLFU">
         <property name="text">
          <string>LFU</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_3">
+       <widget class="QRadioButton" name="radioLRU">
         <property name="text">
          <string>LRU</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_4">
+       <widget class="QRadioButton" name="radioRANDOM">
         <property name="text">
          <string>RANDOM</string>
         </property>
@@ -225,21 +228,21 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QRadioButton" name="radioButton_9">
+       <widget class="QRadioButton" name="radioDireto">
         <property name="text">
          <string>Direto</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_10">
+       <widget class="QRadioButton" name="radioAssociativo">
         <property name="text">
          <string>Associativo</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_11">
+       <widget class="QRadioButton" name="radioAssociativoConjunto">
         <property name="text">
          <string>Associativo por conjunto</string>
         </property>
@@ -261,16 +264,6 @@
      <string>Capacidade total da  cache </string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>211</width>
-      <height>341</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
@@ -282,6 +275,16 @@
     </property>
     <property name="text">
      <string>Fração de acertos</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>211</width>
+      <height>331</height>
+     </rect>
     </property>
    </widget>
    <widget class="QWidget" name="">

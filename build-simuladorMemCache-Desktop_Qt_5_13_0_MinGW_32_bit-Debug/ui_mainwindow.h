@@ -34,10 +34,9 @@ public:
     QWidget *centralWidget;
     QLabel *label;
     QLabel *label_2;
-    QTableWidget *tableWidget_2;
     QLabel *label_3;
     QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QRadioButton *radioFIFO;
     QRadioButton *radioLFU;
@@ -46,7 +45,7 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QGroupBox *groupBox_2;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_3;
     QRadioButton *radioDireto;
     QRadioButton *radioAssociativo;
@@ -54,10 +53,11 @@ public:
     QLabel *label_4;
     QLabel *label_5;
     QPlainTextEdit *plainTextEdit;
-    QWidget *widget2;
+    QTableWidget *tableCache;
+    QWidget *layoutWidget2;
     QVBoxLayout *verticalLayout_4;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton_3;
+    QLineEdit *editCapacidadeCache;
+    QPushButton *btnInserir;
     QLineEdit *lineEdit_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -76,68 +76,37 @@ public:
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(60, 60, 101, 16));
-        tableWidget_2 = new QTableWidget(centralWidget);
-        if (tableWidget_2->columnCount() < 2)
-            tableWidget_2->setColumnCount(2);
-        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget_2->setHorizontalHeaderItem(0, __qtablewidgetitem);
-        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget_2->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        if (tableWidget_2->rowCount() < 10)
-            tableWidget_2->setRowCount(10);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(0, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(1, __qtablewidgetitem3);
-        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(2, __qtablewidgetitem4);
-        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(3, __qtablewidgetitem5);
-        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(4, __qtablewidgetitem6);
-        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(5, __qtablewidgetitem7);
-        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(6, __qtablewidgetitem8);
-        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(7, __qtablewidgetitem9);
-        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(8, __qtablewidgetitem10);
-        QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
-        tableWidget_2->setVerticalHeaderItem(9, __qtablewidgetitem11);
-        tableWidget_2->setObjectName(QString::fromUtf8("tableWidget_2"));
-        tableWidget_2->setGeometry(QRect(450, 90, 211, 331));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(520, 60, 81, 16));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(230, 180, 120, 131));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 20, 84, 88));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 20, 84, 88));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        radioFIFO = new QRadioButton(widget);
+        radioFIFO = new QRadioButton(layoutWidget);
         radioFIFO->setObjectName(QString::fromUtf8("radioFIFO"));
         radioFIFO->setChecked(false);
 
         verticalLayout->addWidget(radioFIFO);
 
-        radioLFU = new QRadioButton(widget);
+        radioLFU = new QRadioButton(layoutWidget);
         radioLFU->setObjectName(QString::fromUtf8("radioLFU"));
 
         verticalLayout->addWidget(radioLFU);
 
-        radioLRU = new QRadioButton(widget);
+        radioLRU = new QRadioButton(layoutWidget);
         radioLRU->setObjectName(QString::fromUtf8("radioLRU"));
 
         verticalLayout->addWidget(radioLRU);
 
-        radioRANDOM = new QRadioButton(widget);
+        radioRANDOM = new QRadioButton(layoutWidget);
         radioRANDOM->setObjectName(QString::fromUtf8("radioRANDOM"));
 
         verticalLayout->addWidget(radioRANDOM);
@@ -151,25 +120,25 @@ public:
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setGeometry(QRect(230, 320, 171, 101));
-        widget1 = new QWidget(groupBox_2);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(10, 20, 143, 65));
-        verticalLayout_3 = new QVBoxLayout(widget1);
+        layoutWidget1 = new QWidget(groupBox_2);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 20, 143, 65));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget1);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        radioDireto = new QRadioButton(widget1);
+        radioDireto = new QRadioButton(layoutWidget1);
         radioDireto->setObjectName(QString::fromUtf8("radioDireto"));
 
         verticalLayout_3->addWidget(radioDireto);
 
-        radioAssociativo = new QRadioButton(widget1);
+        radioAssociativo = new QRadioButton(layoutWidget1);
         radioAssociativo->setObjectName(QString::fromUtf8("radioAssociativo"));
 
         verticalLayout_3->addWidget(radioAssociativo);
 
-        radioAssociativoConjunto = new QRadioButton(widget1);
+        radioAssociativoConjunto = new QRadioButton(layoutWidget1);
         radioAssociativoConjunto->setObjectName(QString::fromUtf8("radioAssociativoConjunto"));
 
         verticalLayout_3->addWidget(radioAssociativoConjunto);
@@ -183,26 +152,35 @@ public:
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(10, 90, 211, 331));
-        widget2 = new QWidget(centralWidget);
-        widget2->setObjectName(QString::fromUtf8("widget2"));
-        widget2->setGeometry(QRect(230, 110, 186, 60));
-        verticalLayout_4 = new QVBoxLayout(widget2);
+        tableCache = new QTableWidget(centralWidget);
+        if (tableCache->columnCount() < 2)
+            tableCache->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tableCache->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tableCache->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        tableCache->setObjectName(QString::fromUtf8("tableCache"));
+        tableCache->setGeometry(QRect(465, 90, 221, 331));
+        layoutWidget2 = new QWidget(centralWidget);
+        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(230, 110, 186, 60));
+        verticalLayout_4 = new QVBoxLayout(layoutWidget2);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
-        lineEdit = new QLineEdit(widget2);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        editCapacidadeCache = new QLineEdit(layoutWidget2);
+        editCapacidadeCache->setObjectName(QString::fromUtf8("editCapacidadeCache"));
         QFont font;
         font.setPointSize(14);
-        lineEdit->setFont(font);
+        editCapacidadeCache->setFont(font);
 
-        verticalLayout_4->addWidget(lineEdit);
+        verticalLayout_4->addWidget(editCapacidadeCache);
 
-        pushButton_3 = new QPushButton(widget2);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        btnInserir = new QPushButton(layoutWidget2);
+        btnInserir->setObjectName(QString::fromUtf8("btnInserir"));
 
-        verticalLayout_4->addWidget(pushButton_3);
+        verticalLayout_4->addWidget(btnInserir);
 
         lineEdit_2 = new QLineEdit(centralWidget);
         lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
@@ -230,10 +208,6 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><h3 style=\" margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:6pt; font-weight:600;\">Projeto 1 - Simulador de algoritmos de substitui\303\247\303\243o de p\303\241gina de mem\303\263ria em cache</span></h3></body></html>", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Arquivo de Entrada", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget_2->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Endere\303\247o", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget_2->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Dado", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Mem\303\263ria Cache", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "Algoritmo", nullptr));
         radioFIFO->setText(QCoreApplication::translate("MainWindow", "FIFO", nullptr));
@@ -248,7 +222,11 @@ public:
         radioAssociativoConjunto->setText(QCoreApplication::translate("MainWindow", "Associativo por conjunto", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Capacidade total da  cache ", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Fra\303\247\303\243o de acertos", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Inserir", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tableCache->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Endere\303\247o", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tableCache->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Dado", nullptr));
+        btnInserir->setText(QCoreApplication::translate("MainWindow", "Inserir", nullptr));
     } // retranslateUi
 
 };

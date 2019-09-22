@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -57,4 +59,14 @@ void MainWindow::on_radioAssociativoConjunto_clicked()
     ui->radioLFU->show();
     ui->radioLRU->show();
     ui->radioRANDOM->show();
+}
+
+void MainWindow::on_btnInserir_clicked()
+{
+
+        ui->tableCache->setRowCount(ui->editCapacidadeCache->text().toInt());
+        ui->tableCache->setColumnCount(2);
+        ui->tableCache->verticalHeader()->setVisible(false);
+        ui->tableCache->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 }

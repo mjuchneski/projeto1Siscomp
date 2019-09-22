@@ -30,6 +30,8 @@ private slots:
 
     void on_radioAssociativoConjunto_clicked();
 
+    void on_btnInserir_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

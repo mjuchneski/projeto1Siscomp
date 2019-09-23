@@ -83,7 +83,7 @@ void MainWindow::on_btnInserir_clicked()
 void MainWindow::on_btnRodar_clicked()
 {
     QString concatena = "";
-    int row = 0, col = 0, posicaoDaVirgula = 0;
+    int row = 0, posicaoDaVirgula = 0;
     QFile arquivo(abrirArquivo);
     if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
         QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
@@ -91,32 +91,25 @@ void MainWindow::on_btnRodar_clicked()
     QTextStream entrada(&arquivo);
     while (!arquivo.atEnd()) {
         QString line = arquivo.readLine();//faz a leitura de uma linha
-
-        for (int c = 0;c < line.length();c++) {
+        for (int c = 0;c < line.length();c++) {//encontra a posição da virgula
             if (line[c] == ","){
                 posicaoDaVirgula = c;
             }
         }
-
-        for (int i = 0; i < posicaoDaVirgula; i++) {
-            concatena = concatena + line[i];
-            ui->tableCache->setItem(row, 0, new QTableWidgetItem(concatena));
-        }
         concatena = "";
-        for (int i = posicaoDaVirgula; i < line.length(); i++) {
-            concatena = concatena + line[i+1];
-            ui->tableCache->setItem(row, 1, new QTableWidgetItem(concatena));
+        for (int i = 0; i < posicaoDaVirgula; i++) {//concatena os dados antes da virgula
+            concatena = concatena + line[i];
         }
+        ui->tableCache->setItem(row, 0, new QTableWidgetItem(concatena));
+
+        concatena = "";
+
+        for (int j = posicaoDaVirgula; j < line.length(); j++) {//concatena os dados depois da virgula
+            concatena = concatena + line[j+1];
+        }
+        ui->tableCache->setItem(row, 1, new QTableWidgetItem(concatena));
         row++;
 
-        /*if (line[c] != ","){
-                a = line[c];
-                ui->tableCache->setItem(row, 0, new QTableWidgetItem(a));
-            }
-            row++;*/
-        //qDebug() << line;
-
     }
-    //ui->tableCache->setItem(0, 1, new QTableWidgetItem("#linha 0, coluna 1"));
 
 }

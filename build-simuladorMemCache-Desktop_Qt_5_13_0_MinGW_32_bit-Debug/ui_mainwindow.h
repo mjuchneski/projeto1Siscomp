@@ -160,7 +160,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         tableCache->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         tableCache->setObjectName(QString::fromUtf8("tableCache"));
-        tableCache->setGeometry(QRect(465, 90, 221, 331));
+        tableCache->setGeometry(QRect(425, 90, 261, 331));
         layoutWidget2 = new QWidget(centralWidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
         layoutWidget2->setGeometry(QRect(230, 110, 186, 60));

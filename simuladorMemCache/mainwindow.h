@@ -32,6 +32,10 @@ private slots:
 
     void on_btnInserir_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_btnRodar_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

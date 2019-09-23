@@ -43,7 +43,7 @@ public:
     QRadioButton *radioLRU;
     QRadioButton *radioRANDOM;
     QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *btnRodar;
     QGroupBox *groupBox_2;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_3;
@@ -114,9 +114,9 @@ public:
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(50, 430, 131, 23));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(270, 430, 75, 23));
+        btnRodar = new QPushButton(centralWidget);
+        btnRodar->setObjectName(QString::fromUtf8("btnRodar"));
+        btnRodar->setGeometry(QRect(270, 430, 75, 23));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setGeometry(QRect(230, 320, 171, 101));
@@ -215,7 +215,7 @@ public:
         radioLRU->setText(QCoreApplication::translate("MainWindow", "LRU", nullptr));
         radioRANDOM->setText(QCoreApplication::translate("MainWindow", "RANDOM", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Carregar Instru\303\247\303\265es", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Rodar", nullptr));
+        btnRodar->setText(QCoreApplication::translate("MainWindow", "Rodar", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Mapeamento", nullptr));
         radioDireto->setText(QCoreApplication::translate("MainWindow", "Direto", nullptr));
         radioAssociativo->setText(QCoreApplication::translate("MainWindow", "Associativo", nullptr));

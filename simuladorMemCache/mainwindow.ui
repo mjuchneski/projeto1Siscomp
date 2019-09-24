@@ -23,6 +23,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:6pt; font-weight:600;&quot;&gt;Projeto 1 - Simulador de algoritmos de substituição de página de memória em cache&lt;/span&gt;&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -32,9 +37,14 @@
      <rect>
       <x>60</x>
       <y>60</y>
-      <width>101</width>
+      <width>121</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Arquivo de Entrada</string>
@@ -45,9 +55,14 @@
      <rect>
       <x>520</x>
       <y>60</y>
-      <width>81</width>
+      <width>101</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Memória Cache</string>
@@ -62,6 +77,11 @@
       <height>131</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="title">
      <string>Algoritmo</string>
     </property>
@@ -71,12 +91,17 @@
        <x>10</x>
        <y>20</y>
        <width>84</width>
-       <height>88</height>
+       <height>100</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QRadioButton" name="radioFIFO">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>FIFO</string>
         </property>
@@ -87,6 +112,11 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioLFU">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>LFU</string>
         </property>
@@ -94,6 +124,11 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioLRU">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>LRU</string>
         </property>
@@ -101,6 +136,11 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioRANDOM">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>RANDOM</string>
         </property>
@@ -115,8 +155,13 @@
       <x>50</x>
       <y>430</y>
       <width>131</width>
-      <height>23</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Carregar Instruções</string>
@@ -131,6 +176,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Rodar</string>
     </property>
@@ -140,9 +190,14 @@
      <rect>
       <x>230</x>
       <y>320</y>
-      <width>171</width>
+      <width>191</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="title">
      <string>Mapeamento</string>
@@ -152,13 +207,18 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>143</width>
-       <height>65</height>
+       <width>164</width>
+       <height>74</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QRadioButton" name="radioDireto">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Direto</string>
         </property>
@@ -166,6 +226,11 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioAssociativo">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Associativo</string>
         </property>
@@ -173,6 +238,11 @@
       </item>
       <item>
        <widget class="QRadioButton" name="radioAssociativoConjunto">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Associativo por conjunto</string>
         </property>
@@ -186,9 +256,14 @@
      <rect>
       <x>230</x>
       <y>80</y>
-      <width>151</width>
+      <width>171</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Capacidade total da  cache </string>
@@ -197,11 +272,16 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>430</x>
       <y>470</y>
-      <width>91</width>
+      <width>111</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Fração de acertos</string>
@@ -216,16 +296,45 @@
       <height>331</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
    </widget>
    <widget class="QTableWidget" name="tableCache">
     <property name="geometry">
      <rect>
-      <x>425</x>
-      <y>90</y>
-      <width>261</width>
-      <height>331</height>
+      <x>432</x>
+      <y>91</y>
+      <width>251</width>
+      <height>350</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>40</number>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>116</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>25</number>
+    </attribute>
     <column>
      <property name="text">
       <string>Endereço</string>
@@ -243,7 +352,7 @@
       <x>230</x>
       <y>110</y>
       <width>186</width>
-      <height>60</height>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -258,6 +367,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnInserir">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Inserir</string>
        </property>

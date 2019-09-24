@@ -73,18 +73,24 @@ public:
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(50, 10, 551, 31));
+        QFont font;
+        font.setPointSize(10);
+        label->setFont(font);
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(60, 60, 101, 16));
+        label_2->setGeometry(QRect(60, 60, 121, 16));
+        label_2->setFont(font);
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(520, 60, 81, 16));
+        label_3->setGeometry(QRect(520, 60, 101, 16));
+        label_3->setFont(font);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(230, 180, 120, 131));
+        groupBox->setFont(font);
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 20, 84, 88));
+        layoutWidget->setGeometry(QRect(10, 20, 84, 100));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -92,37 +98,44 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         radioFIFO = new QRadioButton(layoutWidget);
         radioFIFO->setObjectName(QString::fromUtf8("radioFIFO"));
+        radioFIFO->setFont(font);
         radioFIFO->setChecked(false);
 
         verticalLayout->addWidget(radioFIFO);
 
         radioLFU = new QRadioButton(layoutWidget);
         radioLFU->setObjectName(QString::fromUtf8("radioLFU"));
+        radioLFU->setFont(font);
 
         verticalLayout->addWidget(radioLFU);
 
         radioLRU = new QRadioButton(layoutWidget);
         radioLRU->setObjectName(QString::fromUtf8("radioLRU"));
+        radioLRU->setFont(font);
 
         verticalLayout->addWidget(radioLRU);
 
         radioRANDOM = new QRadioButton(layoutWidget);
         radioRANDOM->setObjectName(QString::fromUtf8("radioRANDOM"));
+        radioRANDOM->setFont(font);
 
         verticalLayout->addWidget(radioRANDOM);
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(50, 430, 131, 23));
+        pushButton->setGeometry(QRect(50, 430, 131, 31));
+        pushButton->setFont(font);
         btnRodar = new QPushButton(centralWidget);
         btnRodar->setObjectName(QString::fromUtf8("btnRodar"));
         btnRodar->setGeometry(QRect(270, 430, 75, 23));
+        btnRodar->setFont(font);
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(230, 320, 171, 101));
+        groupBox_2->setGeometry(QRect(230, 320, 191, 101));
+        groupBox_2->setFont(font);
         layoutWidget1 = new QWidget(groupBox_2);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 20, 143, 65));
+        layoutWidget1->setGeometry(QRect(10, 20, 164, 74));
         verticalLayout_3 = new QVBoxLayout(layoutWidget1);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -130,28 +143,34 @@ public:
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         radioDireto = new QRadioButton(layoutWidget1);
         radioDireto->setObjectName(QString::fromUtf8("radioDireto"));
+        radioDireto->setFont(font);
 
         verticalLayout_3->addWidget(radioDireto);
 
         radioAssociativo = new QRadioButton(layoutWidget1);
         radioAssociativo->setObjectName(QString::fromUtf8("radioAssociativo"));
+        radioAssociativo->setFont(font);
 
         verticalLayout_3->addWidget(radioAssociativo);
 
         radioAssociativoConjunto = new QRadioButton(layoutWidget1);
         radioAssociativoConjunto->setObjectName(QString::fromUtf8("radioAssociativoConjunto"));
+        radioAssociativoConjunto->setFont(font);
 
         verticalLayout_3->addWidget(radioAssociativoConjunto);
 
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(230, 80, 151, 21));
+        label_4->setGeometry(QRect(230, 80, 171, 21));
+        label_4->setFont(font);
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(440, 470, 91, 20));
+        label_5->setGeometry(QRect(430, 470, 111, 20));
+        label_5->setFont(font);
         plainTextEdit = new QPlainTextEdit(centralWidget);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(10, 90, 211, 331));
+        plainTextEdit->setFont(font);
         tableCache = new QTableWidget(centralWidget);
         if (tableCache->columnCount() < 2)
             tableCache->setColumnCount(2);
@@ -160,10 +179,19 @@ public:
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         tableCache->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         tableCache->setObjectName(QString::fromUtf8("tableCache"));
-        tableCache->setGeometry(QRect(425, 90, 261, 331));
+        tableCache->setGeometry(QRect(432, 91, 251, 350));
+        tableCache->setMaximumSize(QSize(16777215, 16777215));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("MS Shell Dlg 2"));
+        font1.setPointSize(10);
+        tableCache->setFont(font1);
+        tableCache->setLineWidth(1);
+        tableCache->horizontalHeader()->setMinimumSectionSize(40);
+        tableCache->horizontalHeader()->setDefaultSectionSize(116);
+        tableCache->verticalHeader()->setDefaultSectionSize(25);
         layoutWidget2 = new QWidget(centralWidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(230, 110, 186, 60));
+        layoutWidget2->setGeometry(QRect(230, 110, 186, 61));
         verticalLayout_4 = new QVBoxLayout(layoutWidget2);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -171,21 +199,22 @@ public:
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
         editCapacidadeCache = new QLineEdit(layoutWidget2);
         editCapacidadeCache->setObjectName(QString::fromUtf8("editCapacidadeCache"));
-        QFont font;
-        font.setPointSize(14);
-        editCapacidadeCache->setFont(font);
+        QFont font2;
+        font2.setPointSize(14);
+        editCapacidadeCache->setFont(font2);
 
         verticalLayout_4->addWidget(editCapacidadeCache);
 
         btnInserir = new QPushButton(layoutWidget2);
         btnInserir->setObjectName(QString::fromUtf8("btnInserir"));
+        btnInserir->setFont(font);
 
         verticalLayout_4->addWidget(btnInserir);
 
         lineEdit_2 = new QLineEdit(centralWidget);
         lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
         lineEdit_2->setGeometry(QRect(540, 460, 113, 31));
-        lineEdit_2->setFont(font);
+        lineEdit_2->setFont(font2);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

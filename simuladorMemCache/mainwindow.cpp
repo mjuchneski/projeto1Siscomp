@@ -100,14 +100,14 @@ void MainWindow::on_btnRodar_clicked()
         for (int i = 0; i < posicaoDaVirgula; i++) {//concatena os dados antes da virgula
             concatena = concatena + line[i];
         }
-        ui->tableCache->setItem(row, 0, new QTableWidgetItem(concatena));
+        ui->tableCache->setItem(row, 0, new QTableWidgetItem(concatena));//adiciona na celula
 
         concatena = "";
 
         for (int j = posicaoDaVirgula; j < line.length(); j++) {//concatena os dados depois da virgula
             concatena = concatena + line[j+1];
         }
-        ui->tableCache->setItem(row, 1, new QTableWidgetItem(concatena));
+        ui->tableCache->setItem(row, 1, new QTableWidgetItem(concatena));//adiciona na celula
         row++;
 
     }

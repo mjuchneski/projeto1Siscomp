@@ -71,18 +71,53 @@ void MainWindow::on_radioAssociativoConjunto_clicked()
 
 void MainWindow::on_btnInserir_clicked()
 {
+    ui->tableCache->setRowCount(ui->editCapacidadeCache->text().toInt());
+    ui->tableCache->setColumnCount(3);
+    ui->tableCache->verticalHeader()->setVisible(false);
+    ui->tableCache->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-        ui->tableCache->setRowCount(ui->editCapacidadeCache->text().toInt());
-        ui->tableCache->setColumnCount(2);
-        ui->tableCache->verticalHeader()->setVisible(false);
-        ui->tableCache->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+        for (int i = 0 ; i < ui->editCapacidadeCache->text().toInt(); i++) {
+            ui->tableCache->setItem(i,0,new QTableWidgetItem("0"));//preenche a linha validade na tabela da cache
+            ui->tableCache->setItem(i,1,new QTableWidgetItem(""));
+        }//end for
 }
 
 
 void MainWindow::on_btnRodar_clicked()
 {
-    QString concatena = "";
+
+    int hit = 0, miss = 0;
+    ui->editMiss->setText(QString::number(miss));
+
+    if(ui->radioDireto->isChecked() == true){
+        QString concatena = "";
+            QFile arquivo(abrirArquivo);
+            if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+                QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+            }//end if
+            QTextStream entrada(&arquivo);
+            while (!arquivo.atEnd()) {
+                QString line = arquivo.readLine();//faz a leitura de uma linha
+                if(ui->tableCache->item(line.toInt(),0)->text() == "0"){
+                    ui->tableCache->setItem(line.toInt(),1, new QTableWidgetItem(line));
+                    ui->tableCache->setItem(line.toInt(),0, new QTableWidgetItem("1"));
+                       qDebug() << "miss";
+                       miss ++;
+                       ui->editMiss->setText(QString::number(miss));
+                } else if (ui->tableCache->item(line.toInt(),0)->text() == "1" && ui->tableCache->item(line.toInt(),1)->text() == line) {
+                            hit ++;
+                            qDebug() << "hit";
+                            ui->editHit->setText(QString::number(hit));
+
+                        }
+
+    }//end while
+            arquivo.close();
+    }//end if
+
+
+    /*QString concatena = "";
     int row = 0, posicaoDaVirgula = 0;
     QFile arquivo(abrirArquivo);
     if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
@@ -110,6 +145,6 @@ void MainWindow::on_btnRodar_clicked()
         ui->tableCache->setItem(row, 1, new QTableWidgetItem(concatena));//adiciona na celula
         row++;
 
-    }
+    }*/
 
 }

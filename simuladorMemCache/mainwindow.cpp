@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QDebug>
+#include <QRandomGenerator>
 
 QFile arquivo;
 QString abrirArquivo;
@@ -89,9 +90,9 @@ void MainWindow::on_btnRodar_clicked()
 
     int hit = 0, miss = 0;
     ui->editMiss->setText(QString::number(miss));
-
+    ui->editHit->setText(QString::number(hit));
+//------------Mapeamento Direto-----------------
     if(ui->radioDireto->isChecked() == true){
-        QString concatena = "";
             QFile arquivo(abrirArquivo);
             if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
                 QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
@@ -115,6 +116,49 @@ void MainWindow::on_btnRodar_clicked()
     }//end while
             arquivo.close();
     }//end if
+
+//----------------Mapeamento Associativo + algoritmo RANDOM--------------------
+    if (ui->radioAssociativo->isChecked() && ui->radioRANDOM->isChecked()){
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+
+        QTextStream entrada(&arquivo);
+        while (!arquivo.atEnd()) {
+            QString line = arquivo.readLine();//faz a leitura de uma linha
+
+            for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+                // ----------verifica se ja existe na cache----------
+                if (ui->tableCache->item(i,0)->text()== "1" && ui->tableCache->item(i,1)->text() == line) {
+                    hit ++;
+                    ui->editHit->setText(QString::number(hit));
+                    i = ui->editCapacidadeCache->text().toInt();
+                }else if(ui->tableCache->item(i,0)->text() == "0"){
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                    ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                    ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
+                    i = ui->editCapacidadeCache->text().toInt();
+                } else if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,0)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
+                    int tamanhoRandom = ui->editCapacidadeCache->text().toInt();
+                    int random = QRandomGenerator::global()->bounded(tamanhoRandom);
+                    ui->tableCache->setItem(random,1, new QTableWidgetItem(line));
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                }
+            }//end for
+        }//end while
+
+
+
+
+
+
+        }//end while
+        arquivo.close();
+    }//end if
+
 
 
     /*QString concatena = "";
@@ -147,4 +191,4 @@ void MainWindow::on_btnRodar_clicked()
 
     }*/
 
-}
+

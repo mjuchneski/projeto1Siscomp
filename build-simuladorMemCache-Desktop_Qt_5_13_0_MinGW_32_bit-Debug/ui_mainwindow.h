@@ -226,9 +226,7 @@ public:
         editMiss = new QLineEdit(centralWidget);
         editMiss->setObjectName(QString::fromUtf8("editMiss"));
         editMiss->setGeometry(QRect(540, 500, 113, 31));
-        QFont font4;
-        font4.setPointSize(13);
-        editMiss->setFont(font4);
+        editMiss->setFont(font3);
         editMiss->setStyleSheet(QString::fromUtf8("color: rgb(226, 0, 0);"));
         label_6 = new QLabel(centralWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));

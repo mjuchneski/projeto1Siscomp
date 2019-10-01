@@ -93,27 +93,67 @@ void MainWindow::on_btnRodar_clicked()
     ui->editHit->setText(QString::number(hit));
 //------------Mapeamento Direto-----------------
     if(ui->radioDireto->isChecked() == true){
-            QFile arquivo(abrirArquivo);
-            if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
-                QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
-            }//end if
-            QTextStream entrada(&arquivo);
-            while (!arquivo.atEnd()) {
-                QString line = arquivo.readLine();//faz a leitura de uma linha
-                if(ui->tableCache->item(line.toInt(),0)->text() == "0"){
-                    ui->tableCache->setItem(line.toInt(),1, new QTableWidgetItem(line));
-                    ui->tableCache->setItem(line.toInt(),0, new QTableWidgetItem("1"));
-                       qDebug() << "miss";
-                       miss ++;
-                       ui->editMiss->setText(QString::number(miss));
-                } else if (ui->tableCache->item(line.toInt(),0)->text() == "1" && ui->tableCache->item(line.toInt(),1)->text() == line) {
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+        QTextStream entrada(&arquivo);
+        while (!arquivo.atEnd()) {
+            QString line = arquivo.readLine();//faz a leitura de uma linha
+            int tam = ui->editCapacidadeCache->text().toInt();
+            int row = line.toInt() % tam;
+            if(ui->tableCache->item(row,0)->text() == "0"){// verifica se a validade é 0
+                ui->tableCache->setItem(row,1, new QTableWidgetItem(line));
+                ui->tableCache->setItem(row,0, new QTableWidgetItem("1"));
+                qDebug() << "miss";
+                miss ++;
+                ui->editMiss->setText(QString::number(miss));
+                } else if (ui->tableCache->item(row,0)->text() == "1" && ui->tableCache->item(row,1)->text() == line) {
                             hit ++;
                             qDebug() << "hit";
                             ui->editHit->setText(QString::number(hit));
+                        } else if (ui->tableCache->item(row,0)->text() == "1" && ui->tableCache->item(row,1)->text() != line) {
+                                    ui->tableCache->setItem(row,1, new QTableWidgetItem(line));
+                                    ui->tableCache->setItem(row,0, new QTableWidgetItem("1"));
+                                    qDebug() << "miss";
+                                    miss ++;
+                                    ui->editMiss->setText(QString::number(miss));
+                                }
 
-                        }
 
-    }//end while
+            /*if (  i >= ui->editCapacidadeCache->text().toInt()-1) {
+                qDebug()<< "nivel 1";
+                int tam = ui->editCapacidadeCache->text().toInt();
+                int posicao = line.toInt() % tam;
+                qDebug()<< "linha" << line;
+                qDebug()<< "tamanho" << tam;
+                qDebug()<< "resto" << posicao;
+                    if(ui->tableCache->item(posicao,0)->text() == "0" ){
+                        qDebug()<< "nivel 2";
+                        ui->tableCache->setItem(posicao,1, new QTableWidgetItem(line));
+                        qDebug() << "miss direto cache menor que mem principal";
+                        qDebug() << "valor resto "<< posicao;
+                        miss ++;
+                        ui->editMiss->setText(QString::number(miss));
+                    } else if (ui->tableCache->item(posicao,0)->text() == "1" && ui->tableCache->item(posicao,1)->text() != line) {
+                        qDebug()<< "nivel 3";
+                        ui->tableCache->setItem(posicao,1, new QTableWidgetItem(line));
+                        qDebug() << "miss direto cache menor que mem principal";
+                        qDebug() << "valor resto "<< posicao;
+                        miss ++;
+                        ui->editMiss->setText(QString::number(miss));
+                            }
+                    else if(ui->tableCache->item(posicao,0)->text() == "1" && ui->tableCache->item(posicao,1)->text() == line){
+                            qDebug()<< "nivel 4";
+                            hit ++;
+                            qDebug() << "hit direto cache menor que mem principal";
+                            qDebug() <<"valor resto "<< posicao;
+                            ui->editHit->setText(QString::number(hit));
+                            }
+            }
+            i ++;*/
+
+        }   //end while
             arquivo.close();
     }//end if
 

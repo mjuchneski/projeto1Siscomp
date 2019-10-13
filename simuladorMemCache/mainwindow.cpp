@@ -237,12 +237,12 @@ void MainWindow::on_btnRodar_clicked()
        while (!arquivo.atEnd()) {
        QString line = arquivo.readLine();//faz a leitura de uma linha
 
-       for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+        for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
            // ----------verifica se ja existe na cache----------
            if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() == line) {//verifica se é hit
                hit ++;
                ui->editHit->setText(QString::number(hit));
-               vetLRU.move(i, vetLRU.size()-1);
+               vetLRU.move(i, vetLRU.size()-1);// move o valor da posição atual para o fim do vetor
                qDebug()<< vetLRU<< "hit";
                i = ui->editCapacidadeCache->text().toInt();
            }else if(ui->tableCache->item(i,0)->text() == "0"){//verifica a linha é vazia
@@ -264,24 +264,81 @@ void MainWindow::on_btnRodar_clicked()
                    vetLRU.pop_front();//remove da cabeça
                    qDebug()<< vetLRU<<"miss cache cheia";
                }
-       }
+        }
 
        }
        arquivo.close();
 
+    }
+
+//-----------------------LFU---------------------
+    if (ui->radioAssociativo->isChecked() && ui->radioLFU->isChecked()){
+        QVector<int> vetLFU;
+        QVector<int> vetLFUHit;
+
+        vetLFU.resize(ui->editCapacidadeCache->text().toInt());
+        vetLFUHit.resize(ui->editCapacidadeCache->text().toInt());
+        qDebug()<< vetLFU;
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+        QTextStream entrada(&arquivo);
+
+        while (!arquivo.atEnd()) {
+        QString line = arquivo.readLine();//faz a leitura de uma linha
+
+            for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+                // ----------verifica se ja existe na cache----------
+                if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() == line) {//verifica se é hit
+                    hit ++;
+                    ui->editHit->setText(QString::number(hit));
+                    qDebug()<<"hit";
+                    vetLFUHit[i]++;
+                    vetLFU.move(i, vetLFU.size()-1);// move o valor da posição atual para o fim do vetor
+                    vetLFUHit.move(i, vetLFU.size()-1);
+                    qDebug()<< vetLFU[i] << "Valor no vetor de posições";
+                    qDebug()<< vetLFUHit[i] << "valor no vetor hit";
+
+                    i = ui->editCapacidadeCache->text().toInt();
+                } else if(ui->tableCache->item(i,0)->text() == "0"){//verifica a linha é vazia
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                    ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                    ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
 
 
-       /*vetLRU[0].push_front(1);
-       vetLRU[1].push_front(0);*/
-
-       //vetLRU[0].insert(0,1);
-       //vetLRU[0].insert(1,1);
-       /*qDebug()<< vetLRU[0];
-       qDebug()<< vetLRU[1];*/
-
-
-       //qDebug()<< vetLRU;
-
+                    vetLFU.push_back(line.toInt());//insere na cauda
+                    vetLFU.pop_front();//remove da cabeça
+                    vetLFUHit.push_back(0);
+                    vetLFUHit.pop_front();
+                    qDebug()<< vetLFU << "miss cache vazia";
+                    qDebug()<< vetLFU[i] << "Valor no vetor de posições";
+                    qDebug()<< vetLFUHit[i] << "valor no vetor hit";
+                    i = ui->editCapacidadeCache->text().toInt();
+                    //-----------LFU----------
+                    //verifica a validade, se a linha é diferente na cache e se a cache está cheia
+                }else if (ui->tableCache->item(i,0)->text() == "1"  && ui->tableCache->item(i,1)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                    /*int menor = vetLFUHit[0];
+                    int posicaoMenor = 0;
+                    for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+                        if (vetLFUHit[i] < menor){
+                            menor = vetLFUHit[i];
+                            posicaoMenor = i;
+                        }
+                    }*/
+                    ui->tableCache->setItem(vetLFU[0],1, new QTableWidgetItem(line));//cache recebe o endereço novo na posição salva no vetor
+                    vetLFUHit.push_back(0);
+                    vetLFUHit.pop_front();
+                    qDebug()<< vetLFU<<"miss cache cheia";
+                    qDebug()<< vetLFU[i] << "Valor no vetor de posições";
+                    qDebug()<< vetLFUHit[i] << "valor no vetor hit";
+                }
+            }
+        }
+        arquivo.close();
     }
 }//end btn
 

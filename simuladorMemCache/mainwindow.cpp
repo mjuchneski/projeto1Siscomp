@@ -9,6 +9,11 @@
 
 QFile arquivo;
 QString abrirArquivo;
+int fifo = 0;
+QVector<int> vet;
+//QVector<int> vetLRU;
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,9 +48,6 @@ void MainWindow::on_pushButton_clicked()
     arquivo.close();
 }
 
-
-
-
 void MainWindow::on_radioDireto_clicked()
 {
     ui->radioFIFO->hide();
@@ -76,7 +78,7 @@ void MainWindow::on_btnInserir_clicked()
     ui->tableCache->setColumnCount(3);
     ui->tableCache->verticalHeader()->setVisible(false);
     ui->tableCache->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+    fifo = 0;
 
         for (int i = 0 ; i < ui->editCapacidadeCache->text().toInt(); i++) {
             ui->tableCache->setItem(i,0,new QTableWidgetItem("0"));//preenche a linha validade na tabela da cache
@@ -119,40 +121,6 @@ void MainWindow::on_btnRodar_clicked()
                                     miss ++;
                                     ui->editMiss->setText(QString::number(miss));
                                 }
-
-
-            /*if (  i >= ui->editCapacidadeCache->text().toInt()-1) {
-                qDebug()<< "nivel 1";
-                int tam = ui->editCapacidadeCache->text().toInt();
-                int posicao = line.toInt() % tam;
-                qDebug()<< "linha" << line;
-                qDebug()<< "tamanho" << tam;
-                qDebug()<< "resto" << posicao;
-                    if(ui->tableCache->item(posicao,0)->text() == "0" ){
-                        qDebug()<< "nivel 2";
-                        ui->tableCache->setItem(posicao,1, new QTableWidgetItem(line));
-                        qDebug() << "miss direto cache menor que mem principal";
-                        qDebug() << "valor resto "<< posicao;
-                        miss ++;
-                        ui->editMiss->setText(QString::number(miss));
-                    } else if (ui->tableCache->item(posicao,0)->text() == "1" && ui->tableCache->item(posicao,1)->text() != line) {
-                        qDebug()<< "nivel 3";
-                        ui->tableCache->setItem(posicao,1, new QTableWidgetItem(line));
-                        qDebug() << "miss direto cache menor que mem principal";
-                        qDebug() << "valor resto "<< posicao;
-                        miss ++;
-                        ui->editMiss->setText(QString::number(miss));
-                            }
-                    else if(ui->tableCache->item(posicao,0)->text() == "1" && ui->tableCache->item(posicao,1)->text() == line){
-                            qDebug()<< "nivel 4";
-                            hit ++;
-                            qDebug() << "hit direto cache menor que mem principal";
-                            qDebug() <<"valor resto "<< posicao;
-                            ui->editHit->setText(QString::number(hit));
-                            }
-            }
-            i ++;*/
-
         }   //end while
             arquivo.close();
     }//end if
@@ -180,7 +148,7 @@ void MainWindow::on_btnRodar_clicked()
                     ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
                     ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
                     i = ui->editCapacidadeCache->text().toInt();
-                } else if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,0)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
+                } else if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
                     int tamanhoRandom = ui->editCapacidadeCache->text().toInt();
                     int random = QRandomGenerator::global()->bounded(tamanhoRandom);
                     ui->tableCache->setItem(random,1, new QTableWidgetItem(line));
@@ -189,17 +157,133 @@ void MainWindow::on_btnRodar_clicked()
                 }
             }//end for
         }//end while
-
-
-
-
-
-
-        }//end while
+        }//end if
         arquivo.close();
-    }//end if
+
+        //----------------Mapeamento Associativo + FIFO--------------------
+    if (ui->radioAssociativo->isChecked() && ui->radioFIFO->isChecked()){
+        fifo ++;
+
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+        QTextStream entrada(&arquivo);
+        vet.resize(ui->editCapacidadeCache->text().toInt());
+        if (fifo -1 == 0){
+            for (int i = 0; i < vet.size(); i++){
+                vet[i]= ui->tableCache->item(i,1)->text().toInt();
+            }
+        }
+
+        //qDebug()<< vet << "vetor preenchido com o que estava na cache";
+        while (!arquivo.atEnd()) {
+        QString line = arquivo.readLine();//faz a leitura de uma linha
+            QString cauda = line;
+            for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+                // ----------verifica se ja existe na cache----------
+                if (ui->tableCache->item(i,0)->text()== "1" && ui->tableCache->item(i,1)->text() == line) {//verifica se é hit
+                    hit ++;
+                    ui->editHit->setText(QString::number(hit));
+                    i = ui->editCapacidadeCache->text().toInt();
+                }else if(ui->tableCache->item(i,0)->text() == "0"){//verifica a linha é vazia
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                    ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                    ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
+                    vet[i] = line.toInt();
+                    //qDebug()<< vet[i];
+                    i = ui->editCapacidadeCache->text().toInt();
+                    //-----------FIFO----------
+                    //verifica se a linha esta cheia, se a linha é diferente na cache e se a cache está cheia
+                } else if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
+                            //qDebug()<< "Fifo";
+                            miss ++;
+                            ui->editMiss->setText(QString::number(miss));
+                            ui->tableCache->setItem(vet[0],1, new QTableWidgetItem(line));//cache recebe o endereço novo na posição salva no vetor
+                            vet.pop_front();//remove da cabeça
+                            vet.push_back(cauda.toInt());//insere na cauda
+                            /*for (int c = 1; c <= vet.size(); c++) {
+                               //qDebug()<< c;
+                               if(c < vet.size()){
+                                    vet[c-1] = vet[c];
+                                    //qDebug()<< vet[c];
+                               }
+                               if(c >= vet.size()) {
+                                    vet[c-1] = cauda.toInt();
+                                   //qDebug()<< vet <<"cauda";
+                                 }
+                             }*/
+                       }
+             }//end for
+             }
+        }// end while
+        arquivo.close();
 
 
+            //---------------------ASSOCIATIVO + LRU-------------------
+
+    if (ui->radioAssociativo->isChecked() && ui->radioLRU->isChecked()){
+       QVector<int> vetLRU;
+
+       vetLRU.resize(ui->editCapacidadeCache->text().toInt());
+       qDebug()<< vetLRU;
+       QFile arquivo(abrirArquivo);
+       if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+           QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+       }//end if
+       QTextStream entrada(&arquivo);
+
+       while (!arquivo.atEnd()) {
+       QString line = arquivo.readLine();//faz a leitura de uma linha
+
+       for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+           // ----------verifica se ja existe na cache----------
+           if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() == line) {//verifica se é hit
+               hit ++;
+               ui->editHit->setText(QString::number(hit));
+               vetLRU.move(i, vetLRU.size()-1);
+               qDebug()<< vetLRU<< "hit";
+               i = ui->editCapacidadeCache->text().toInt();
+           }else if(ui->tableCache->item(i,0)->text() == "0"){//verifica a linha é vazia
+               miss ++;
+               ui->editMiss->setText(QString::number(miss));
+               ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+               ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
+               vetLRU.push_back(line.toInt());//insere na cauda
+               vetLRU.pop_front();//remove da cabeça
+               qDebug()<< vetLRU << "miss cache vazia";
+               i = ui->editCapacidadeCache->text().toInt();
+               //-----------LRU----------
+               //verifica a validade, se a linha é diferente na cache e se a cache está cheia
+           } else if (ui->tableCache->item(i,0)->text() == "1"  && ui->tableCache->item(i,1)->text() != line && i == ui->editCapacidadeCache->text().toInt()-1){
+                   miss ++;
+                   ui->editMiss->setText(QString::number(miss));
+                   ui->tableCache->setItem(vetLRU[0],1, new QTableWidgetItem(line));//cache recebe o endereço novo na posição salva no vetor
+                   vetLRU.push_back(line.toInt());//insere na cauda
+                   vetLRU.pop_front();//remove da cabeça
+                   qDebug()<< vetLRU<<"miss cache cheia";
+               }
+       }
+
+       }
+       arquivo.close();
+
+
+
+       /*vetLRU[0].push_front(1);
+       vetLRU[1].push_front(0);*/
+
+       //vetLRU[0].insert(0,1);
+       //vetLRU[0].insert(1,1);
+       /*qDebug()<< vetLRU[0];
+       qDebug()<< vetLRU[1];*/
+
+
+       //qDebug()<< vetLRU;
+
+    }
+}//end btn
 
     /*QString concatena = "";
     int row = 0, posicaoDaVirgula = 0;

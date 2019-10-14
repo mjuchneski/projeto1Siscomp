@@ -354,7 +354,7 @@ void MainWindow::on_btnRodar_clicked()
 
                             int valorAtual = line.toInt();
                             int valorCache = 0;
-                            for(int m = 0; m < ui->editCapacidadeCache->text().toInt() -1; m++){
+                            for(int m = 0; m <= ui->editCapacidadeCache->text().toInt() -1; m++){
                                 qDebug()<< m;
                                 valorCache = ui->tableCache->item(m,1)->text().toInt();
                                 if ( valorAtual == valorCache){
@@ -377,7 +377,7 @@ void MainWindow::on_btnRodar_clicked()
                                 }//for debug
                                 break;
                             }//if igual
-                            else if (ui->tableCache->item(j,1)->text() != line  && verificador == false) {
+                            else if (valorCache != valorAtual  && verificador == false) {
                                 //encontra a instrução com menor numero de hit
                                 int menor = contHit[0][1];
                                 int posicaoMenor = 0;

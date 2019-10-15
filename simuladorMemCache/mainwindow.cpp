@@ -50,6 +50,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_radioDireto_clicked()
 {
+    ui->editConjuntos->hide();
     ui->radioFIFO->hide();
     ui->radioLFU->hide();
     ui->radioLRU->hide();
@@ -58,6 +59,7 @@ void MainWindow::on_radioDireto_clicked()
 
 void MainWindow::on_radioAssociativo_clicked()
 {
+    ui->editConjuntos->hide();
     ui->radioFIFO->show();
     ui->radioLFU->show();
     ui->radioLRU->show();
@@ -66,11 +68,16 @@ void MainWindow::on_radioAssociativo_clicked()
 
 void MainWindow::on_radioAssociativoConjunto_clicked()
 {
+    ui->editConjuntos->show();
     ui->radioFIFO->show();
     ui->radioLFU->show();
     ui->radioLRU->show();
     ui->radioRANDOM->show();
 }
+
+
+
+
 
 void MainWindow::on_btnInserir_clicked()
 {
@@ -157,8 +164,9 @@ void MainWindow::on_btnRodar_clicked()
                 }
             }//end for
         }//end while
-        }//end if
         arquivo.close();
+    }//end if
+
 
         //----------------Mapeamento Associativo + FIFO--------------------
     if (ui->radioAssociativo->isChecked() && ui->radioFIFO->isChecked()){
@@ -616,8 +624,262 @@ void MainWindow::on_btnRodar_clicked()
 
         }//while
         arquivo.close();
+    }// if lfu
+
+
+    if(ui->radioAssociativoConjunto->isChecked() && ui->radioRANDOM->isChecked()){
+
+        int qtdLinhaConjunto = ui->editCapacidadeCache->text().toInt() / ui->editConjuntos->text().toInt();// descobre quantas linhas para cada conjunto
+        int qtdConjunto = ui->editConjuntos->text().toInt();
+
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+
+        QTextStream entrada(&arquivo);
+        while (!arquivo.atEnd()) {
+            QString line = arquivo.readLine();//faz a leitura de uma linha
+
+            int linhaAtual = line.toInt();
+            int conjuntoReferencia = linhaAtual % qtdConjunto;// descobre a qual conjunto pertence
+            qDebug() << "linha "<< linhaAtual;
+            qDebug() << "Vou para o conjunto " << conjuntoReferencia;
+            for(int i = conjuntoReferencia*(qtdLinhaConjunto ); i < (conjuntoReferencia +1) * qtdLinhaConjunto; i++ ){
+
+                if (ui->tableCache->item(i,0)->text()== "1" && ui->tableCache->item(i,1)->text() == line) {
+                    hit ++;
+                    ui->editHit->setText(QString::number(hit));
+                    i = ui->editCapacidadeCache->text().toInt();
+                }else if(ui->tableCache->item(i,0)->text() == "0"){
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                    ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                    ui->tableCache->setItem(i,1, new QTableWidgetItem(line));
+                    i = ui->editCapacidadeCache->text().toInt();
+                }else if (ui->tableCache->item(i,0)->text() == "1" && ui->tableCache->item(i,1)->text() != line && i == (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                    //int tamanhoRandom = qtdLinhaConjunto;
+
+                    int random = QRandomGenerator::global()->bounded(conjuntoReferencia*(qtdLinhaConjunto -1),(conjuntoReferencia +1) * (qtdLinhaConjunto-1) );
+                    qDebug()<<"Numero gerado no random" << random;
+
+                    ui->tableCache->setItem(random,1, new QTableWidgetItem(line));
+                    miss ++;
+                    ui->editMiss->setText(QString::number(miss));
+                }
+
+            }// end for conjunto
+        }//end while
+        arquivo.close();
     }
+
+
+    //------------------------------Associativo por conjunto + FIFO-----------------------------------------
+    if(ui->radioAssociativoConjunto->isChecked() && ui->radioFIFO->isChecked()){
+        fifo ++;
+        int qtdLinhaConjunto = ui->editCapacidadeCache->text().toInt() / ui->editConjuntos->text().toInt();// descobre quantas linhas para cada conjunto
+        int qtdConjunto = ui->editConjuntos->text().toInt();
+        bool estado = true;
+        vet.resize(ui->editCapacidadeCache->text().toInt());
+        if (fifo -1 == 0){
+            for (int i = 0; i < vet.size(); i++){
+                vet[i]= ui->tableCache->item(i,1)->text().toInt();
+            }
+        }
+
+        QFile arquivo(abrirArquivo);
+        if (!arquivo.open(QFile::ReadOnly|QFile::Text)){// faz a abertura do arquivo no modo de leitura
+            QMessageBox::warning(this,"Alerta","O arquivo não foi aberto");
+        }//end if
+
+        QTextStream entrada(&arquivo);
+        while (!arquivo.atEnd()) {
+            QString line = arquivo.readLine();//faz a leitura de uma linha
+
+            int linhaAtual = line.toInt();
+            int conjuntoReferencia = linhaAtual % qtdConjunto;// descobre a qual conjunto pertence
+            qDebug() << "linha "<< linhaAtual;
+            qDebug() << "Vou para o conjunto " << conjuntoReferencia;
+            for(int i = conjuntoReferencia*(qtdLinhaConjunto ); i < (conjuntoReferencia +1) * qtdLinhaConjunto; i++ ){
+                int linhaCache = ui->tableCache->item(i,1)->text().toInt();
+
+                if (i <= (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                    if (estado){
+                        if(ui->tableCache->item(i,0)->text() == "0"){//verifica se a linha é vazia
+                            qDebug()<< "verificou se esta vazio, cache vazia";
+                            miss ++;
+                            ui->editMiss->setText(QString::number(miss));
+                            ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                            ui->tableCache->setItem(i,1, new QTableWidgetItem(QString::number(linhaAtual)));
+                            vet[i] = linhaAtual;
+                            qDebug()<< vet << "miss cache vazia, insere "<< linhaAtual << "no final";
+                            break;//i = ui->editCapacidadeCache->text().toInt();
+                        }//end if linha vazia
+                        else if (ui->tableCache->item(i,0)->text() == "1" && linhaCache == linhaAtual) {//verifica se é hit
+                                 qDebug()<< "Verificou se é hit cache vazia";
+                                 hit ++;
+                                 ui->editHit->setText(QString::number(hit));
+                                 qDebug()<< vet << "hit, cache vazia "<< linhaAtual << "";
+                                 break;//i = ui->editCapacidadeCache->text().toInt();
+                        }//end if hit cache vazia
+
+                    }//end if estado
+                    if (i >= (conjuntoReferencia +1) * qtdLinhaConjunto -1) {
+                            estado = false;
+                    }
+                }//if chegou no final
+
+                if (i == (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                    if (!estado){
+                    qDebug()<<"Estado da cache = "<< estado;
+
+                    for (int j = conjuntoReferencia*(qtdLinhaConjunto ); j < (conjuntoReferencia +1) * qtdLinhaConjunto; j++ ) {
+                        bool verificador = false;
+
+                        int valorAtual = line.toInt();
+                        int valorCache = 0;
+                        for(int m = conjuntoReferencia*(qtdLinhaConjunto ); m < (conjuntoReferencia +1) * qtdLinhaConjunto; m++){
+                            qDebug()<< m;
+                            valorCache = ui->tableCache->item(m,1)->text().toInt();
+                            if ( valorAtual == valorCache){
+                                verificador = true;
+                                qDebug() << "é igual?"<< verificador;
+                                break;
+                            }//if encontra hit
+                        }//for encontra hit
+
+                        if (valorCache == valorAtual && verificador == true){// verifica hit na cache cheia
+                            hit ++;
+                            ui->editHit->setText(QString::number(hit));
+                            qDebug()<< vet<< "hit cache cheia"<< linhaAtual << "";
+                            break;
+                        }//end if hit cheio
+                        else if (valorCache != valorAtual  && verificador == false) {//miss cache cheia
+                            miss ++;
+                            ui->editMiss->setText(QString::number(miss));
+
+                            int indiceReal = conjuntoReferencia*(qtdLinhaConjunto );
+                            while (indiceReal < (conjuntoReferencia +1) * qtdLinhaConjunto) {
+                                if (ui->tableCache->item(indiceReal,1)->text().toInt() == vet[conjuntoReferencia*(qtdLinhaConjunto )]){
+                                    break;
+                                }
+                                indiceReal++;
+                            }
+
+                            ui->tableCache->setItem(indiceReal,1, new QTableWidgetItem(QString::number(linhaAtual)));
+
+                            for (int m = conjuntoReferencia*(qtdLinhaConjunto ); m < (conjuntoReferencia +1) * qtdLinhaConjunto; m++){
+                                if(m < (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                                    vet[m] = vet[m+1];
+                                }
+                            };
+                            vet[(conjuntoReferencia +1) * qtdLinhaConjunto -1] = linhaAtual;
+                            /*vet.removeAt(conjuntoReferencia*(qtdLinhaConjunto));//vet.pop_front();//remove da cabeça
+                            vet.insert((conjuntoReferencia +1) * qtdLinhaConjunto,linhaAtual);//vet.push_back(linhaAtual);//insere na cauda
+                            */
+                            qDebug()<< vet<< "miss cache cheia, insere "<< linhaAtual << "no final";
+                            break;
+                        }// if miss cheio
+                    }//for cache cheia
+                  }//if estado cheio
+              }//if for cache cheio
+
+
+            }// end for
+        }//end while
+        arquivo.close();
+    }// end radio fifo
 }//end btn
+
+
+/*          for (int i = 0;i < ui->editCapacidadeCache->text().toInt();i++) {
+            qDebug()<< "entrou no laço 1 ";
+            int linhaAtual = line.toInt();
+            int linhaCache = ui->tableCache->item(i,1)->text().toInt();
+
+            if (i <= ui->editCapacidadeCache->text().toInt()-1){
+                if (estado){
+                    if(ui->tableCache->item(i,0)->text() == "0"){//verifica se a linha é vazia
+                        qDebug()<< "verificou se esta vazio, cache vazia";
+                        miss ++;
+                        ui->editMiss->setText(QString::number(miss));
+                        ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
+                        ui->tableCache->setItem(i,1, new QTableWidgetItem(QString::number(linhaAtual)));
+                        vet[i] = linhaAtual;
+                        qDebug()<< vet << "miss cache vazia, insere "<< linhaAtual << "no final";
+                        break;//i = ui->editCapacidadeCache->text().toInt();
+                    }//end if linha vazia
+                    else if (ui->tableCache->item(i,0)->text() == "1" && linhaCache == linhaAtual) {//verifica se é hit
+                             qDebug()<< "Verificou se é hit cache vazia";
+                             hit ++;
+                             ui->editHit->setText(QString::number(hit));
+                             qDebug()<< vet << "hit, cache vazia "<< linhaAtual << "";
+                             break;//i = ui->editCapacidadeCache->text().toInt();
+                    }//end if hit cache vazia
+
+                }//end if estado
+                if (i >= ui->editCapacidadeCache->text().toInt()-1) {
+                        estado = false;
+                }
+            }//if chegou no final
+
+            if (i == ui->editCapacidadeCache->text().toInt()-1){
+                if (!estado){
+                qDebug()<<"Estado da cache = "<< estado;
+
+                for (int j = 0;j <= ui->editCapacidadeCache->text().toInt(); j++) {
+                    bool verificador = false;
+
+                    int valorAtual = line.toInt();
+                    int valorCache = 0;
+                    for(int m = 0; m <= ui->editCapacidadeCache->text().toInt() -1; m++){
+                        //qDebug()<< m;
+                        valorCache = ui->tableCache->item(m,1)->text().toInt();
+                        if ( valorAtual == valorCache){
+                            verificador = true;
+                            qDebug() << "é igual?"<< verificador;
+                            break;
+                        }//if encontra hit
+                    }//for encontra hit
+
+                    if (valorCache == valorAtual && verificador == true){// verifica hit na cache cheia
+                        hit ++;
+                        ui->editHit->setText(QString::number(hit));
+                        qDebug()<< vet<< "hit cache cheia"<< linhaAtual << "";
+                        break;
+                    }//end if hit cheio
+                    else if (valorCache != valorAtual  && verificador == false) {//miss cache cheia
+                        miss ++;
+                        ui->editMiss->setText(QString::number(miss));
+
+                        int indiceReal = 0;
+                        while (indiceReal < ui->editCapacidadeCache->text().toInt()) {
+                            if (ui->tableCache->item(indiceReal,1)->text().toInt() == vet[0]){
+                                break;
+                            }
+                            indiceReal+=1;
+                        }
+
+                        ui->tableCache->setItem(indiceReal,1, new QTableWidgetItem(QString::number(linhaAtual)));
+
+                        vet.pop_front();//remove da cabeça
+                        vet.push_back(linhaAtual);//insere na cauda
+                        qDebug()<< vet<< "miss cache cheia, insere "<< linhaAtual << "no final";
+                        break;
+                    }// if miss cheio
+                }//for cache cheia
+              }//if estado cheio
+          }//if for cache cheio
+
+
+
+
+
+        }//for cache vazia*/
+
+
+
+
 
 
     /*QString concatena = "";

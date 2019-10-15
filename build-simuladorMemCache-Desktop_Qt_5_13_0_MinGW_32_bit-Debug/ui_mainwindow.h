@@ -50,17 +50,17 @@ public:
     QRadioButton *radioDireto;
     QRadioButton *radioAssociativo;
     QRadioButton *radioAssociativoConjunto;
-    QLabel *label_4;
     QLabel *label_5;
     QPlainTextEdit *plainTextEdit;
     QTableWidget *tableCache;
-    QWidget *layoutWidget2;
-    QVBoxLayout *verticalLayout_4;
-    QLineEdit *editCapacidadeCache;
-    QPushButton *btnInserir;
     QLineEdit *editHit;
     QLineEdit *editMiss;
     QLabel *label_6;
+    QLineEdit *editCapacidadeCache;
+    QLabel *label_4;
+    QLabel *label_7;
+    QPushButton *btnInserir;
+    QLineEdit *editConjuntos;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -90,7 +90,7 @@ public:
         label_3->setFont(font1);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(230, 180, 120, 131));
+        groupBox->setGeometry(QRect(230, 210, 120, 131));
         groupBox->setFont(font1);
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
@@ -131,11 +131,11 @@ public:
         pushButton->setFont(font1);
         btnRodar = new QPushButton(centralWidget);
         btnRodar->setObjectName(QString::fromUtf8("btnRodar"));
-        btnRodar->setGeometry(QRect(270, 430, 75, 31));
+        btnRodar->setGeometry(QRect(270, 480, 75, 31));
         btnRodar->setFont(font1);
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(230, 320, 191, 101));
+        groupBox_2->setGeometry(QRect(220, 340, 191, 101));
         groupBox_2->setFont(font1);
         layoutWidget1 = new QWidget(groupBox_2);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
@@ -163,10 +163,6 @@ public:
 
         verticalLayout_3->addWidget(radioAssociativoConjunto);
 
-        label_4 = new QLabel(centralWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(230, 80, 171, 21));
-        label_4->setFont(font1);
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(430, 470, 111, 20));
@@ -196,31 +192,11 @@ public:
         tableCache->horizontalHeader()->setMinimumSectionSize(40);
         tableCache->horizontalHeader()->setDefaultSectionSize(116);
         tableCache->verticalHeader()->setDefaultSectionSize(25);
-        layoutWidget2 = new QWidget(centralWidget);
-        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(230, 110, 186, 61));
-        verticalLayout_4 = new QVBoxLayout(layoutWidget2);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
-        editCapacidadeCache = new QLineEdit(layoutWidget2);
-        editCapacidadeCache->setObjectName(QString::fromUtf8("editCapacidadeCache"));
-        QFont font3;
-        font3.setPointSize(14);
-        editCapacidadeCache->setFont(font3);
-
-        verticalLayout_4->addWidget(editCapacidadeCache);
-
-        btnInserir = new QPushButton(layoutWidget2);
-        btnInserir->setObjectName(QString::fromUtf8("btnInserir"));
-        btnInserir->setFont(font1);
-
-        verticalLayout_4->addWidget(btnInserir);
-
         editHit = new QLineEdit(centralWidget);
         editHit->setObjectName(QString::fromUtf8("editHit"));
         editHit->setGeometry(QRect(540, 460, 113, 31));
+        QFont font3;
+        font3.setPointSize(14);
         editHit->setFont(font3);
         editHit->setStyleSheet(QString::fromUtf8("color: rgb(70, 211, 0);"));
         editMiss = new QLineEdit(centralWidget);
@@ -232,6 +208,26 @@ public:
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(430, 510, 101, 16));
         label_6->setFont(font1);
+        editCapacidadeCache = new QLineEdit(centralWidget);
+        editCapacidadeCache->setObjectName(QString::fromUtf8("editCapacidadeCache"));
+        editCapacidadeCache->setGeometry(QRect(230, 80, 184, 29));
+        editCapacidadeCache->setFont(font3);
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(230, 40, 184, 54));
+        label_4->setFont(font1);
+        label_7 = new QLabel(centralWidget);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setGeometry(QRect(230, 110, 184, 16));
+        label_7->setFont(font1);
+        btnInserir = new QPushButton(centralWidget);
+        btnInserir->setObjectName(QString::fromUtf8("btnInserir"));
+        btnInserir->setGeometry(QRect(230, 170, 184, 31));
+        btnInserir->setFont(font1);
+        editConjuntos = new QLineEdit(centralWidget);
+        editConjuntos->setObjectName(QString::fromUtf8("editConjuntos"));
+        editConjuntos->setGeometry(QRect(230, 130, 184, 31));
+        editConjuntos->setFont(font3);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -266,7 +262,6 @@ public:
         radioDireto->setText(QCoreApplication::translate("MainWindow", "Direto", nullptr));
         radioAssociativo->setText(QCoreApplication::translate("MainWindow", "Associativo", nullptr));
         radioAssociativoConjunto->setText(QCoreApplication::translate("MainWindow", "Associativo por conjunto", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "Capacidade total da  cache ", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Fra\303\247\303\243o de acertos", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableCache->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Validade", nullptr));
@@ -274,8 +269,10 @@ public:
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Endere\303\247o", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = tableCache->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Dado", nullptr));
-        btnInserir->setText(QCoreApplication::translate("MainWindow", "Inserir", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Fra\303\247\303\243o de erros", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "Capacidade total da  cache ", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Quantidade de Conjuntos", nullptr));
+        btnInserir->setText(QCoreApplication::translate("MainWindow", "Inserir", nullptr));
     } // retranslateUi
 
 };

@@ -812,7 +812,9 @@ void MainWindow::on_btnRodar_clicked()
             qDebug() << "linha "<< linhaAtual;
             qDebug() << "Vou para o conjunto " << conjuntoReferencia;
             for(int i = conjuntoReferencia*(qtdLinhaConjunto ); i < (conjuntoReferencia +1) * qtdLinhaConjunto; i++ ){
+                int linhaAtual = line.toInt();
                 int linhaCache = ui->tableCache->item(i,1)->text().toInt();
+
                 if (i <= (conjuntoReferencia +1) * qtdLinhaConjunto -1){
                     if (estado){
                         if(ui->tableCache->item(i,0)->text() == "0"){//verifica se a linha é vazia
@@ -822,12 +824,18 @@ void MainWindow::on_btnRodar_clicked()
                          ui->tableCache->setItem(i,0, new QTableWidgetItem("1"));
                          ui->tableCache->setItem(i,1, new QTableWidgetItem(QString::number(linhaAtual)));
 
-                         for (int m = conjuntoReferencia*(qtdLinhaConjunto ); m < (conjuntoReferencia +1) * qtdLinhaConjunto; m++){
-                             if(m < (conjuntoReferencia +1) * qtdLinhaConjunto -1){
-                                 vetLRU[m] = vetLRU[m+1];
+                         //vetLRU.pop_front();//remove da cabeça
+                         //vetLRU.push_back(linhaAtual);//insere na cauda
+
+                         for(int j = conjuntoReferencia*(qtdLinhaConjunto ); j < (conjuntoReferencia +1) * qtdLinhaConjunto; j++){
+                             qDebug()<< "reordenou cache vazia";
+                             if(j < (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                                 vetLRU[j] = vetLRU[j+1];
                              }
-                         };
+                         }
                          vetLRU[(conjuntoReferencia +1) * qtdLinhaConjunto -1] = linhaAtual;
+
+
 
                          qDebug()<< vetLRU<< "miss cache vazia, insere "<< linhaAtual << "no final";
                          break;//i = ui->editCapacidadeCache->text().toInt();
@@ -838,8 +846,8 @@ void MainWindow::on_btnRodar_clicked()
                                  hit ++;
                                  ui->editHit->setText(QString::number(hit));
 
-                                 int indiceVetor = 0;
-                                 for(int m = conjuntoReferencia*(qtdLinhaConjunto ); m < (conjuntoReferencia +1) * qtdLinhaConjunto; m++){
+                                 int indiceVetor = conjuntoReferencia*(qtdLinhaConjunto );
+                                 for(int m = conjuntoReferencia*(qtdLinhaConjunto ); m <= (conjuntoReferencia +1) * qtdLinhaConjunto -1; m++){
                                      //qDebug()<< m;
 
                                      if ( vetLRU[m] == linhaAtual){
@@ -848,16 +856,21 @@ void MainWindow::on_btnRodar_clicked()
                                      }
                                  }
 
+
                                  int indiceReal = conjuntoReferencia*(qtdLinhaConjunto );
                                  while (indiceReal < (conjuntoReferencia +1) * qtdLinhaConjunto) {
                                      if (ui->tableCache->item(indiceReal,1)->text().toInt() == vetLRU[conjuntoReferencia*(qtdLinhaConjunto )]){
+
                                          break;
                                      }
-                                     indiceReal++;
+                                     indiceReal+=1;
                                  }
 
                                  ui->tableCache->setItem(i,1, new QTableWidgetItem(QString::number(linhaAtual)));
-                                 vetLRU.move(i,(conjuntoReferencia +1) * qtdLinhaConjunto -1);
+
+
+
+                                 vetLRU.move(indiceVetor,(conjuntoReferencia +1) * qtdLinhaConjunto -1);
 
                                  qDebug()<< vetLRU<< "hit, move "<< linhaAtual << "pro final";
                                  break;//i = ui->editCapacidadeCache->text().toInt();
@@ -869,15 +882,15 @@ void MainWindow::on_btnRodar_clicked()
                     }
                 }//if chegou no final
 
-                if (i == (conjuntoReferencia +1) * qtdLinhaConjunto-1){
+                if (i == (conjuntoReferencia +1) * qtdLinhaConjunto -1){
                     if (!estado){
                     //qDebug()<<"Estado da cache = "<< estado;
 
-                    for (int j = conjuntoReferencia*(qtdLinhaConjunto ); j < (conjuntoReferencia +1) * qtdLinhaConjunto; j++) {
+                    for (int j = conjuntoReferencia*(qtdLinhaConjunto );j <= (conjuntoReferencia +1) * qtdLinhaConjunto; j++) {
                         bool verificador = false;
 
                         int valorAtual = line.toInt();
-                        int valorCache = 0;
+                        int valorCache = conjuntoReferencia*(qtdLinhaConjunto );
                         for(int m = conjuntoReferencia*(qtdLinhaConjunto ); m <= (conjuntoReferencia +1) * qtdLinhaConjunto -1; m++){
                             //qDebug()<< m;
                             valorCache = ui->tableCache->item(m,1)->text().toInt();
@@ -895,7 +908,7 @@ void MainWindow::on_btnRodar_clicked()
                             ui->editHit->setText(QString::number(hit));
 
 
-                            int indiceVetor = 0;
+                            int indiceVetor = conjuntoReferencia*(qtdLinhaConjunto );
                             for(int m = conjuntoReferencia*(qtdLinhaConjunto ); m <= (conjuntoReferencia +1) * qtdLinhaConjunto -1; m++){
                                 //qDebug()<< m;
 
@@ -904,20 +917,19 @@ void MainWindow::on_btnRodar_clicked()
                                     break;
                                 }
                             }
-
-
                             int indiceReal = conjuntoReferencia*(qtdLinhaConjunto );
                             while (indiceReal < (conjuntoReferencia +1) * qtdLinhaConjunto) {
-                                if (ui->tableCache->item(indiceReal,1)->text().toInt() == vetLRU[conjuntoReferencia*(qtdLinhaConjunto )]){
+                                if (ui->tableCache->item(indiceReal,1)->text().toInt() == vetLRU[indiceReal]){
+
                                     break;
                                 }
-                                indiceReal++;
+                                indiceReal+=1;
                             }
 
-                            ui->tableCache->setItem(indiceReal,1, new QTableWidgetItem(QString::number(linhaAtual)));
-                            vetLRU.move(j,(conjuntoReferencia +1) * qtdLinhaConjunto -1);
+                            ui->tableCache->setItem(vetLRU[indiceReal],1, new QTableWidgetItem(QString::number(linhaAtual)));
+                            vetLRU.move(indiceVetor,(conjuntoReferencia +1) * qtdLinhaConjunto -1);
 
-                           qDebug()<< vetLRU<< "hit cache cheia, move "<< linhaAtual << "pro final";
+                            qDebug()<< vetLRU<< "hit cache cheia, move "<< linhaAtual << "pro final";
                             break;
                         }//end if hit cheio
                         if (valorCache != valorAtual  && verificador == false) {//miss cache cheia
@@ -927,19 +939,20 @@ void MainWindow::on_btnRodar_clicked()
                             int indiceReal = conjuntoReferencia*(qtdLinhaConjunto );
                             while (indiceReal < (conjuntoReferencia +1) * qtdLinhaConjunto) {
                                 if (ui->tableCache->item(indiceReal,1)->text().toInt() == vetLRU[conjuntoReferencia*(qtdLinhaConjunto )]){
+
                                     break;
                                 }
-                                indiceReal++;
+                                indiceReal+=1;
                             }
 
                             ui->tableCache->setItem(indiceReal,1, new QTableWidgetItem(QString::number(linhaAtual)));
 
 
-                            for (int m = conjuntoReferencia*(qtdLinhaConjunto ); m < (conjuntoReferencia +1) * qtdLinhaConjunto; m++){
-                                if(m < (conjuntoReferencia +1) * qtdLinhaConjunto -1){
-                                    vetLRU[m] = vetLRU[m+1];
+                            for(int k = conjuntoReferencia*(qtdLinhaConjunto ); k < (conjuntoReferencia +1) * qtdLinhaConjunto; k++){
+                                if(k < (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                                    vetLRU[k] = vetLRU[k+1];
                                 }
-                            };
+                            }
                             vetLRU[(conjuntoReferencia +1) * qtdLinhaConjunto -1] = linhaAtual;
                             qDebug()<< vetLRU<< "miss cache cheia, insere "<< linhaAtual << "no final";
                             break;
@@ -947,9 +960,6 @@ void MainWindow::on_btnRodar_clicked()
                     }//for cache cheia
                   }//if estado cheio
               }//if for cache cheio
-
-
-
             }// end for
         }//end while
         arquivo.close();

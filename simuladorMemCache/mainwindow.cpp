@@ -98,8 +98,10 @@ void MainWindow::on_btnRodar_clicked()
 {
 
     int hit = 0, miss = 0;
+    double fracaoAcertos = 0.00;
     ui->editMiss->setText(QString::number(miss));
     ui->editHit->setText(QString::number(hit));
+    ui->editFracaoAcertos->setText(QString::number(fracaoAcertos));
 //------------Mapeamento Direto-----------------
     if(ui->radioDireto->isChecked() == true){
         QFile arquivo(abrirArquivo);
@@ -130,6 +132,9 @@ void MainWindow::on_btnRodar_clicked()
                                 }
         }   //end while
             arquivo.close();
+    float total = hit+miss;
+    fracaoAcertos = (hit/total)*100;
+    ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }//end if
 
 //----------------Mapeamento Associativo + algoritmo RANDOM--------------------
@@ -165,6 +170,9 @@ void MainWindow::on_btnRodar_clicked()
             }//end for
         }//end while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }//end if
 
 
@@ -279,7 +287,9 @@ void MainWindow::on_btnRodar_clicked()
 
     }// end while
     arquivo.close();
-
+    float total = hit+miss;
+    fracaoAcertos = (hit/total)*100;
+    ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
 }
             //---------------------ASSOCIATIVO + LRU-------------------
 
@@ -478,10 +488,12 @@ void MainWindow::on_btnRodar_clicked()
 
      }//while
        arquivo.close();
-
+       float total = hit+miss;
+       fracaoAcertos = (hit/total)*100;
+       ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }//if radio
 
-//-----------------------LFU---------------------
+//-----------------------Associativo + LFU---------------------
     if (ui->radioAssociativo->isChecked() && ui->radioLFU->isChecked()){
 
 
@@ -624,6 +636,9 @@ void MainWindow::on_btnRodar_clicked()
 
         }//while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }// if lfu
 
 //--------------------------------------ASSOCIATIVO POR CONJUNTO + RANDOM-------------------------------------
@@ -671,6 +686,9 @@ void MainWindow::on_btnRodar_clicked()
             }// end for conjunto
         }//end while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }
 
 
@@ -788,6 +806,9 @@ void MainWindow::on_btnRodar_clicked()
             }// end for
         }//end while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }// end radio fifo
 
 
@@ -944,7 +965,7 @@ void MainWindow::on_btnRodar_clicked()
                                 }
                                 indiceReal+=1;
                             }
-
+                            ui->tableCache->setItem(indiceReal,0, new QTableWidgetItem("1"));
                             ui->tableCache->setItem(indiceReal,1, new QTableWidgetItem(QString::number(linhaAtual)));
 
 
@@ -963,6 +984,9 @@ void MainWindow::on_btnRodar_clicked()
             }// end for
         }//end while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }//end radio LRU
 
     //------------------------------Associativo por conjunto + LFU-----------------------------------------
@@ -991,8 +1015,10 @@ void MainWindow::on_btnRodar_clicked()
             int conjuntoReferencia = linhaAtual % qtdConjunto;// descobre a qual conjunto pertence
             qDebug() << "linha "<< linhaAtual;
             qDebug() << "Vou para o conjunto " << conjuntoReferencia;
+
+
             for(int i = conjuntoReferencia*(qtdLinhaConjunto ); i < (conjuntoReferencia +1) * qtdLinhaConjunto; i++ ){
-                if (i <= (conjuntoReferencia +1) * qtdLinhaConjunto -1){
+                if (i < (conjuntoReferencia +1) * qtdLinhaConjunto ){
                     if (estado){
                         qDebug()<<"Estado da cache = "<< estado;
                     if(ui->tableCache->item(i,0)->text() == "0"){//verifica se a linha é vazia
@@ -1029,7 +1055,7 @@ void MainWindow::on_btnRodar_clicked()
                          }
 
                 }
-                if (i >= (conjuntoReferencia +1) * qtdLinhaConjunto -1) {
+                if (i == (conjuntoReferencia +1) * qtdLinhaConjunto -1) {
                         estado = false;
                 }
 
@@ -1056,8 +1082,7 @@ void MainWindow::on_btnRodar_clicked()
                                 }
                             }
                             qDebug() << "Encontrou igual? "<< verificador;
-                            valorAtual = line.toInt();
-                            valorCache = ui->tableCache->item(j,1)->text().toInt();
+                            //valorCache = ui->tableCache->item(j,1)->text().toInt();
                             if (valorCache == valorAtual && verificador == true){
                                 hit ++;
                                 ui->editHit->setText(QString::number(hit));
@@ -1069,7 +1094,7 @@ void MainWindow::on_btnRodar_clicked()
                                 }//for debug
                                 break;
                             }//if igual
-                            else if (valorCache != valorAtual  && verificador == false) {
+                            else if (valorCache != valorAtual  && verificador == false) {//miss cache cheia
                                 //encontra a instrução com menor numero de hit
                                 int menor = contHit[conjuntoReferencia*(qtdLinhaConjunto )][1];
                                 int posicaoMenor = conjuntoReferencia*(qtdLinhaConjunto );
@@ -1086,6 +1111,7 @@ void MainWindow::on_btnRodar_clicked()
                                 //incrementa miss e substitui na cache
                                 miss ++;
                                 ui->editMiss->setText(QString::number(miss));
+                                ui->tableCache->setItem(posicaoMenor,0, new QTableWidgetItem("1"));
                                 ui->tableCache->setItem(posicaoMenor,1, new QTableWidgetItem(line));//cache recebe o endereço novo na posição salva no vetor
                                 contHit[posicaoMenor][0] = line.toInt();
                                 contHit[posicaoMenor][1] = 0;
@@ -1094,6 +1120,7 @@ void MainWindow::on_btnRodar_clicked()
                                 for (int k = conjuntoReferencia*(qtdLinhaConjunto ); k < (conjuntoReferencia +1) * qtdLinhaConjunto; k++){
                                     qDebug() << contHit[k][0] << "|" << contHit[k][1];
                                 }
+                                estado = true;
                                 break;
                             }//if diferente
                         }//for cheio
@@ -1105,9 +1132,10 @@ void MainWindow::on_btnRodar_clicked()
             }//for
         }//end while
         arquivo.close();
+        float total = hit+miss;
+        fracaoAcertos = (hit/total)*100;
+        ui->editFracaoAcertos->setText(QString::number(fracaoAcertos,'f', 2)+" %");
     }//end radio lfu
-
-
 
 }//end btn
 

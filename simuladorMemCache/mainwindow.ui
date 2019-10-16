@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>963</width>
-    <height>621</height>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>10</y>
+      <x>60</x>
+      <y>30</y>
       <width>601</width>
       <height>31</height>
      </rect>
@@ -35,8 +35,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>60</y>
+      <x>70</x>
+      <y>80</y>
       <width>121</width>
       <height>16</height>
      </rect>
@@ -53,8 +53,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>60</y>
+      <x>530</x>
+      <y>80</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -71,8 +71,8 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>210</y>
+      <x>240</x>
+      <y>230</y>
       <width>120</width>
       <height>131</height>
      </rect>
@@ -152,8 +152,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>430</y>
+      <x>60</x>
+      <y>450</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -170,8 +170,8 @@
    <widget class="QPushButton" name="btnRodar">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>480</y>
+      <x>280</x>
+      <y>500</y>
       <width>75</width>
       <height>31</height>
      </rect>
@@ -188,8 +188,8 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>340</y>
+      <x>230</x>
+      <y>360</y>
       <width>191</width>
       <height>101</height>
      </rect>
@@ -254,8 +254,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>470</y>
+      <x>420</x>
+      <y>490</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -266,14 +266,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Fração de acertos</string>
+     <string>Hits</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>90</y>
+      <x>20</x>
+      <y>110</y>
       <width>211</width>
       <height>331</height>
      </rect>
@@ -287,8 +287,8 @@
    <widget class="QTableWidget" name="tableCache">
     <property name="geometry">
      <rect>
-      <x>432</x>
-      <y>91</y>
+      <x>442</x>
+      <y>111</y>
       <width>351</width>
       <height>350</height>
      </rect>
@@ -339,8 +339,8 @@
    <widget class="QLineEdit" name="editHit">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>460</y>
+      <x>550</x>
+      <y>480</y>
       <width>113</width>
       <height>31</height>
      </rect>
@@ -357,8 +357,8 @@
    <widget class="QLineEdit" name="editMiss">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>500</y>
+      <x>550</x>
+      <y>520</y>
       <width>113</width>
       <height>31</height>
      </rect>
@@ -375,8 +375,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>510</y>
+      <x>420</x>
+      <y>530</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -387,14 +387,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Fração de erros</string>
+     <string>Misses</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="editCapacidadeCache">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>80</y>
+      <x>240</x>
+      <y>100</y>
       <width>184</width>
       <height>29</height>
      </rect>
@@ -408,8 +408,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>40</y>
+      <x>240</x>
+      <y>60</y>
       <width>184</width>
       <height>54</height>
      </rect>
@@ -426,8 +426,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>110</y>
+      <x>240</x>
+      <y>130</y>
       <width>184</width>
       <height>16</height>
      </rect>
@@ -444,8 +444,8 @@
    <widget class="QPushButton" name="btnInserir">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>170</y>
+      <x>240</x>
+      <y>190</y>
       <width>184</width>
       <height>31</height>
      </rect>
@@ -462,9 +462,67 @@
    <widget class="QLineEdit" name="editConjuntos">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>130</y>
+      <x>240</x>
+      <y>150</y>
       <width>184</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelImg">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>550</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../QtCacheSim.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>580</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Fração de acertos</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="editFracaoAcertos">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>570</y>
+      <width>113</width>
       <height>31</height>
      </rect>
     </property>

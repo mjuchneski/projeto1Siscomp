@@ -18,11 +18,11 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-    void on_radioButton_9_clicked();
+    //void on_radioButton_9_clicked();
 
-    void on_radioDireto_objectNameChanged(const QString &objectName);
+    //void on_radioDireto_objectNameChanged(const QString &objectName);
 
-    void on_radioDireto_clicked(bool checked);
+    //void on_radioDireto_clicked(bool checked);
 
     void on_radioDireto_clicked();
 
@@ -32,7 +32,7 @@ private slots:
 
     void on_btnInserir_clicked();
 
-    void on_pushButton_2_clicked();
+    //void on_pushButton_2_clicked();
 
     void on_btnRodar_clicked();
 

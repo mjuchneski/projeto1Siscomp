@@ -89,7 +89,7 @@ public:
         label_2->setFont(font1);
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(530, 80, 101, 16));
+        label_3->setGeometry(QRect(580, 70, 101, 16));
         label_3->setFont(font1);
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
@@ -175,23 +175,21 @@ public:
         plainTextEdit->setGeometry(QRect(20, 110, 211, 331));
         plainTextEdit->setFont(font1);
         tableCache = new QTableWidget(centralWidget);
-        if (tableCache->columnCount() < 3)
-            tableCache->setColumnCount(3);
+        if (tableCache->columnCount() < 2)
+            tableCache->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableCache->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         tableCache->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableCache->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         tableCache->setObjectName(QString::fromUtf8("tableCache"));
-        tableCache->setGeometry(QRect(442, 111, 351, 350));
+        tableCache->setGeometry(QRect(500, 100, 241, 350));
         tableCache->setMaximumSize(QSize(16777215, 16777215));
         QFont font2;
         font2.setFamily(QString::fromUtf8("MS Shell Dlg 2"));
         font2.setPointSize(10);
         tableCache->setFont(font2);
         tableCache->setLineWidth(1);
-        tableCache->setColumnCount(3);
+        tableCache->setColumnCount(2);
         tableCache->horizontalHeader()->setMinimumSectionSize(40);
         tableCache->horizontalHeader()->setDefaultSectionSize(116);
         tableCache->verticalHeader()->setDefaultSectionSize(25);
@@ -285,8 +283,6 @@ public:
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Validade", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableCache->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Endere\303\247o", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableCache->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Dado", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Misses", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Capacidade total da  cache ", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "Quantidade de Conjuntos", nullptr));

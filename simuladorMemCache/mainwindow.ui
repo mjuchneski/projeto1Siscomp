@@ -53,8 +53,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>80</y>
+      <x>580</x>
+      <y>70</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -287,9 +287,9 @@
    <widget class="QTableWidget" name="tableCache">
     <property name="geometry">
      <rect>
-      <x>442</x>
-      <y>111</y>
-      <width>351</width>
+      <x>500</x>
+      <y>100</y>
+      <width>241</width>
       <height>350</height>
      </rect>
     </property>
@@ -309,7 +309,7 @@
      <number>1</number>
     </property>
     <property name="columnCount">
-     <number>3</number>
+     <number>2</number>
     </property>
     <attribute name="horizontalHeaderMinimumSectionSize">
      <number>40</number>
@@ -328,11 +328,6 @@
     <column>
      <property name="text">
       <string>Endereço</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Dado</string>
      </property>
     </column>
    </widget>
